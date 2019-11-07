@@ -31,6 +31,7 @@ function App() {
       } else {
         alert('something went wrong, i dunno, check the console')
         console.log(response)
+        throw 'error'
       }
     }).then(gameData => {
       console.log(gameData)
@@ -49,6 +50,7 @@ function App() {
       } else {
         alert('something went wrong, i dunno, check the console')
         console.log(response)
+        throw 'error'
       }
     }).then(data => {
       console.log(data)
