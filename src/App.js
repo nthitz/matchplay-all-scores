@@ -1,5 +1,5 @@
 import React, { useState }from 'react';
-import logo from './logo.svg';
+import forkme from './forkme.png';
 import './App.css';
 
 const getTournamentSettings = (tournamentId) => `https://matchplay.events/data/tournaments/${encodeURIComponent(tournamentId)}`
@@ -94,12 +94,18 @@ function App() {
     console.log(gameResults)
   }
   return (
-    <div className="App">
-      <div>
-        <input type="text" value={tournamentId} onChange={handleInput} onKeyUp={checkForEnter} />
-        <input type="button" value='lookup' onClick={lookupTournament} />
+    <div>
+      <a href="https://github.com/nthitz/matchplay-all-scores" style={{ position: 'absolute'}}>
+        <img width="149" height="149" src={forkme} alt="Fork me on GitHub" />
+      </a>
+
+      <div className="App">
+        <div>
+          <input type="text" value={tournamentId} onChange={handleInput} onKeyUp={checkForEnter} />
+          <input type="button" value='lookup' onClick={lookupTournament} />
+        </div>
+        {gameResultsDisplay}
       </div>
-      {gameResultsDisplay}
     </div>
   );
 }
