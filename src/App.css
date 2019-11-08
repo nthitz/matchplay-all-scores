@@ -1,8 +1,18 @@
 .App {
   max-width: 800px;
   margin: 0 auto;
+  margin-top: 1em;
+}
+
+.forkme {
+  position: absolute;
+  top: 0;
 }
 
 .table {
   margin-top: 1em;
+}
+
+.error {
+  color: red;
 }

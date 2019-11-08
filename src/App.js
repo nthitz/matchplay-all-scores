@@ -12,9 +12,9 @@ function App() {
   const [validGames, setValidGames] = useState(null)
   const [tournamentSettings, setTournamentSettings] = useState(null)
   const [gameResults, setGameResults] = useState({})
+  const [error, setError] = useState(null)
 
   const handleInput = (event) => {
-    console.log(event.keyCode)
     setTournamentId(event.target.value)
   }
 
@@ -29,13 +29,11 @@ function App() {
       if (response.status === 200) {
         return response.json()
       } else {
-        alert('something went wrong, i dunno, check the console')
+        setError(`error getting game results ${JSON.stringify(response)}`)
         console.log(response)
         throw 'error'
       }
     }).then(gameData => {
-      console.log(gameData)
-      console.log(gameResults)
       setGameResults(oldResults => {
         return {...oldResults, [game.arena_id]: gameData}
       })
@@ -43,19 +41,22 @@ function App() {
   }
 
   const lookupTournament = () => {
-    console.log(tournamentId)
     window.fetch(getTournamentSettings(tournamentId)).then(response => {
       if (response.status === 200) {
         return response.json()
       } else {
-        alert('something went wrong, i dunno, check the console')
+        setError(`error getting tournament settings, are you sure the matchplay id is correct?`)
+
         console.log(response)
         throw 'error'
       }
     }).then(data => {
       console.log(data)
       setTournamentSettings(data)
-
+      if (data.type !== 'best_game') {
+        setError('matchplay tourney not a best game format, try a different matchplay id')
+        return;
+      }
       data.players.forEach(player => {
         playersById[player.player_id] = player
       })
@@ -83,27 +84,36 @@ function App() {
           if (!playersById[result.player_id]) {
             debugger
           }
-          return <tr key={result.game_id}><td>#{index + 1} {playersById[result.player_id].name}</td><td style={{ paddingLeft: '1em'}}>{result.score.toLocaleString()}</td></tr>
+          return <tr key={result.game_id} style={{ color: result.status === 'pending' ? '#aaa' : null}}>
+            <td>#{index + 1} {playersById[result.player_id].name}</td>
+            <td style={{ paddingLeft: '1em'}}>{result.score.toLocaleString()}</td>
+          </tr>
         })
       }
       return <div key={game.arena_id} className='table'>
-        {game.name}
+        <a href={`https://matchplay.events/live/${tournamentId}/scores?arena_id=${game.arena_id}`}>
+          {game.name}
+        </a>
         <table><tbody>{top3}</tbody></table>
       </div>
     })
-    console.log(gameResults)
   }
   return (
     <div>
-      <a href="https://github.com/nthitz/matchplay-all-scores" style={{ position: 'absolute'}}>
+      <a href="https://github.com/nthitz/matchplay-all-scores" className='forkme'>
         <img width="149" height="149" src={forkme} alt="Fork me on GitHub" />
       </a>
 
       <div className="App">
         <div>
-          <input type="text" value={tournamentId} onChange={handleInput} onKeyUp={checkForEnter} />
+          A tool for Matchplay.events to see a list of the top scores for game in a best_game tournament at once. That is, if I wanna easily see what locations would be worthwhile visiting and if they have scores I can take down
+          <br /><br />
+          Enter matchplay.events id below. It's the part of the url after live/ <br />
+          https://matchplay.events/live/<input type="text" value={tournamentId} onChange={handleInput} onKeyUp={checkForEnter} />
           <input type="button" value='lookup' onClick={lookupTournament} />
         </div>
+
+        {error ? <div className='error'>{error}</div>: null}
         {gameResultsDisplay}
       </div>
     </div>
