@@ -2,6 +2,7 @@
   max-width: 800px;
   margin: 0 auto;
   margin-top: 1em;
+  padding: 1em;
 }
 
 .forkme {
@@ -15,4 +16,10 @@
 
 .error {
   color: red;
+}
+
+@media screen and (max-width: 1030px) {
+  .forkme {
+    display: none;
+  }
 }
