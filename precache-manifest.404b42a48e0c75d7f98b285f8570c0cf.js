@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "99b6e6b4eb3cc8b551611322a1709758",
+    "revision": "f3864236aceeb7ea9377bb88a1c423de",
     "url": "/matchplay-all-scores/index.html"
   },
   {
-    "revision": "97049927c93cbfffddb8",
+    "revision": "1ee63bf751cc629d6d1f",
     "url": "/matchplay-all-scores/static/css/main.be782f89.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/matchplay-all-scores/static/js/2.9e8ea948.chunk.js"
   },
   {
-    "revision": "97049927c93cbfffddb8",
-    "url": "/matchplay-all-scores/static/js/main.e308293b.chunk.js"
+    "revision": "1ee63bf751cc629d6d1f",
+    "url": "/matchplay-all-scores/static/js/main.26c43bb3.chunk.js"
   },
   {
     "revision": "8f6dd22fb63f0471526a",
