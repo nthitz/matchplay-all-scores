@@ -4,7 +4,8 @@ import './App.css';
 
 const getTournamentSettings = (tournamentId) => `https://matchplay.events/data/tournaments/${encodeURIComponent(tournamentId)}`
 const getMachineResults = (tournamentId, arenaId) => `https://matchplay.events/data/tournaments/${encodeURIComponent(tournamentId)}/arenas/${encodeURIComponent(arenaId)}/scores`
-const defaultTournamentId = 'opwnov2019'
+const query = new URLSearchParams(window.location.search)
+const defaultTournamentId = query.has('t') ? query.get('t') : 'opwnov2019'
 const playersById = {}
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
   }
 
   const lookupTournament = () => {
+    window.history.pushState(null, null, `?t=${encodeURIComponent(tournamentId)}`)
     window.fetch(getTournamentSettings(tournamentId)).then(response => {
       if (response.status === 200) {
         return response.json()
