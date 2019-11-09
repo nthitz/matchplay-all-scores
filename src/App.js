@@ -76,6 +76,22 @@ function App() {
       validGames.forEach(requestGameData)
     })
   }
+
+  const checkPaste = (event) => {
+    const clipboard = event.clipboardData.getData('Text')
+    // should match http or https, or no protocol looking for the bit after live
+    const matchplayRe = /(https?:\/\/)?matchplay.events\/live\/([^/]+)(\/.+)?/
+    console.log(clipboard.match(matchplayRe))
+    if (!clipboard) return
+    const matches = clipboard.match(matchplayRe)
+    if (matches) {
+      if (matches[2]) {
+        setTournamentId(matches[2])
+        event.preventDefault()
+        event.stopPropagation()
+      }
+    }
+  }
   let gameResultsDisplay = null
   if (validGames) {
     gameResultsDisplay = validGames.map(game => {
@@ -111,7 +127,8 @@ function App() {
           A tool for Matchplay.events to see a list of the top scores for game in a best_game tournament at once. That is, if I wanna easily see what locations would be worthwhile visiting and if they have scores I can take down
           <br /><br />
           Enter matchplay.events id below. It's the part of the url after live/ <br />
-          https://matchplay.events/live/<input type="text" value={tournamentId} onChange={handleInput} onKeyUp={checkForEnter} />
+          https://matchplay.events/live/
+          <input type="text" value={tournamentId} onChange={handleInput} onKeyUp={checkForEnter} onPaste={checkPaste} />
           <input type="button" value='lookup' onClick={lookupTournament} />
         </div>
 
