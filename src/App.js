@@ -42,6 +42,8 @@ function App() {
   }
 
   const lookupTournament = () => {
+    window.location = `https://matchplay.events/live/${encodeURIComponent(tournamentId)}/scores?arena_id=top`
+    return
     window.history.pushState(null, null, `?t=${encodeURIComponent(tournamentId)}`)
     window.fetch(getTournamentSettings(tournamentId)).then(response => {
       if (response.status === 200) {
@@ -123,7 +125,8 @@ function App() {
       </a>
 
       <div className="App">
-        <div>
+        <div>Matchplay now does this natively, just goto the Top Scores arena, thanks Andreas!</div>
+        <br /><div>
           A tool for Matchplay.events to see a list of the top scores for game in a best_game tournament at once. That is, if I wanna easily see what locations would be worthwhile visiting and if they have scores I can take down
           <br /><br />
           Enter matchplay.events id below. It's the part of the url after live/ <br />
